@@ -17,20 +17,23 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 let fall = new Animated.Value(1);
 const bottomSheetRef = React.createRef<BottomSheet>()
 
-export class TabOneScreen extends Component {
+
+export class ItemDetails extends Component { 
+
+private item: CryptoOverViewModel;
 
   public state: { coins: CryptoOverViewModel[], modalvisible: boolean } = {
     coins: [],
     modalvisible: false,
   }
 
+  constructor(route: any){
+    super(route);
 
-  componentDidMount() {
 
-
-    //searchStockMarket("ASML");
-    //searchStockMarket("AAPL");
-    getCryptoMarketData().then((result) => this.setState({ coins: result }));
+    this.item = route.route.params.item;
+    
+    console.log(this.item.ath)
   }
 
 
@@ -38,24 +41,10 @@ export class TabOneScreen extends Component {
     return (
       <>
         <View>
-          <Text style={styles.mainTitle}>100.000,00</Text>
-          <Text style={styles.subTitle}>5%</Text>
+            <Text>{this.item.name}</Text>
+            <Text>{this.item.currentPrice}</Text>
 
-          <FlatList
-            contentContainerStyle={{ paddingBottom: 40, paddingTop: 40 }}
-            ItemSeparatorComponent={
-              () => (<View
-                style={{
-                  borderBottomColor: '#D3D3D3',
-                  borderBottomWidth: 1,
-                  marginEnd: 20,
-                  marginStart: 20,
-                }}>
-              </View>)
-            }
-            data={this.state.coins}
-            renderItem={({ item, index, separators }) => <ItemOverview item={item}></ItemOverview>}
-          />
+          
           </View>
       </>
     );

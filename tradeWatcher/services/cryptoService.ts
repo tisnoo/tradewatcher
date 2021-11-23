@@ -6,6 +6,8 @@ export const getCryptoMarketData = async () => {
     const resp = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=false");
     const data = resp.data;
 
+    console.log(data);
+
     const formattedData = formatMarketData(data);
 
     return formattedData;
@@ -15,6 +17,6 @@ export const getCryptoMarketData = async () => {
 }
 
 const formatMarketData = (data: Array<any>) => {
-    return data.map((value) => new CryptoOverViewModel(value["image"], value["id"],value["ath"],value["current_price"],value["price_change_24h"],value["symbol"],value["name"]));
+    return data.map((value) => new CryptoOverViewModel(value["image"], value["id"],value["ath"],value["current_price"],value["price_change_percentage_24h"],value["symbol"],value["name"]));
 }
 
